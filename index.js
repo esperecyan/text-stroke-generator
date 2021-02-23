@@ -43,7 +43,10 @@ var update = function() {
   }
   
   // update code preview
-  $('pre').html('text-shadow: ' + $preview.css('text-shadow') + ';');
+  $('pre').html('text-shadow: ' + $preview.css('text-shadow').replace(
+    /(-?[0-9]+(\.[0-9]+)?)px/g,
+    (match, number) => number === '0' ? '0' : (Number.parseFloat(number) / 16).toFixed(3).replace(/\.?0+$/g, '') + 'em'
+  ) + ';');
 }
 
 var appendShadow = function(item, x, y, col) {
